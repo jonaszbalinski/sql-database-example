@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="database" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\jonas\source\repos\sql-database-example\database.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="sql_database_example.Properties.Settings" SettingsPropertyName="databaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CAR" Member="CARs">
+    <Type Name="CAR">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="mark" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="person_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PERSON_CAR" Member="PERSON" ThisKey="person_id" OtherKey="id" Type="PERSON" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PERSON" Member="PERSONs">
+    <Type Name="PERSON">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="driver_license_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="PERSON_CAR" Member="CARs" ThisKey="id" OtherKey="person_id" Type="CAR" />
+    </Type>
+  </Table>
+</Database>
