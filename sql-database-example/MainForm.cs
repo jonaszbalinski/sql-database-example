@@ -12,7 +12,7 @@ namespace sql_database_example
 {
     public partial class MainForm : Form
     {
-        DataClassesDataContext DatabaseDT = new DataClassesDataContext(); 
+        public static DataClassesDataContext DatabaseDT = new DataClassesDataContext(); 
         public MainForm()
         {
             InitializeComponent();
@@ -30,20 +30,69 @@ namespace sql_database_example
         {
             if (listBoxPerson.SelectedItem != null)
             {
-                if(listBoxPerson.SelectedItem is PERSON)
+                if (listBoxPerson.SelectedItem is PERSON p)
                 {
-                    PERSON p = (PERSON)listBoxPerson.SelectedItem;
+                    if (p.CARs.Count == 0)
+                    {
+                        if(MessageBox.Show("Do you want to delete selected person?",
+                            "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            DatabaseDT.PERSONs.DeleteOnSubmit(p);
+                            DatabaseDT.SubmitChanges();
+                            RefreshPersonList();
+                        }
+                        return;
+                    }
 
-                    if(MessageBox.Show("Do you want to delete selected person with cars", 
-                        "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    DialogResult result = MessageBox
+                        .Show("Do you want to delete selected person with cars?",
+                        "Warning", MessageBoxButtons.YesNoCancel);
+
+                    if (result == DialogResult.Yes)
                     {
                         DatabaseDT.CARs.DeleteAllOnSubmit(p.CARs);
                         DatabaseDT.PERSONs.DeleteOnSubmit(p);
                         DatabaseDT.SubmitChanges();
                         RefreshPersonList();
                     }
+                    else if (result == DialogResult.No)
+                    {
+                        foreach (CAR car in p.CARs)
+                        {
+                            car.person_id = null;
+                        }
+                        DatabaseDT.PERSONs.DeleteOnSubmit(p);
+                        DatabaseDT.SubmitChanges();
+                        RefreshPersonList();
+                    }
                 }
             }
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            FormEditPerson form = new FormEditPerson();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                RefreshPersonList();
+            }
+        }
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+            if (listBoxPerson.SelectedItem != null)
+            {
+                if (listBoxPerson.SelectedItem is PERSON p)
+                {
+                    FormEditPerson form = new FormEditPerson(p);
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        RefreshPersonList();
+                    }
+                }
+            }
+
+
         }
     }
 
@@ -52,7 +101,7 @@ namespace sql_database_example
         public override string ToString()
         {
             return name + ", DL received: " + driver_license_date.ToShortDateString() +
-                " (ilość pojazdów: " + CARs.Count() + ")";
+                " (cars count: " + CARs.Count() + ")";
         }
     }
 

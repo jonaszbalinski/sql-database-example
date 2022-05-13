@@ -30,12 +30,12 @@ namespace sql_database_example
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertCAR(CAR instance);
-    partial void UpdateCAR(CAR instance);
-    partial void DeleteCAR(CAR instance);
     partial void InsertPERSON(PERSON instance);
     partial void UpdatePERSON(PERSON instance);
     partial void DeletePERSON(PERSON instance);
+    partial void InsertCAR(CAR instance);
+    partial void UpdateCAR(CAR instance);
+    partial void DeleteCAR(CAR instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -68,14 +68,6 @@ namespace sql_database_example
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<CAR> CARs
-		{
-			get
-			{
-				return this.GetTable<CAR>();
-			}
-		}
-		
 		public System.Data.Linq.Table<PERSON> PERSONs
 		{
 			get
@@ -83,179 +75,12 @@ namespace sql_database_example
 				return this.GetTable<PERSON>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CAR")]
-	public partial class CAR : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _mark;
-		
-		private decimal _price;
-		
-		private int _person_id;
-		
-		private EntityRef<PERSON> _PERSON;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnmarkChanging(string value);
-    partial void OnmarkChanged();
-    partial void OnpriceChanging(decimal value);
-    partial void OnpriceChanged();
-    partial void Onperson_idChanging(int value);
-    partial void Onperson_idChanged();
-    #endregion
-		
-		public CAR()
-		{
-			this._PERSON = default(EntityRef<PERSON>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
+		public System.Data.Linq.Table<CAR> CARs
 		{
 			get
 			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mark", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string mark
-		{
-			get
-			{
-				return this._mark;
-			}
-			set
-			{
-				if ((this._mark != value))
-				{
-					this.OnmarkChanging(value);
-					this.SendPropertyChanging();
-					this._mark = value;
-					this.SendPropertyChanged("mark");
-					this.OnmarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_price", DbType="Decimal(18,2) NOT NULL")]
-		public decimal price
-		{
-			get
-			{
-				return this._price;
-			}
-			set
-			{
-				if ((this._price != value))
-				{
-					this.OnpriceChanging(value);
-					this.SendPropertyChanging();
-					this._price = value;
-					this.SendPropertyChanged("price");
-					this.OnpriceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_person_id", DbType="Int NOT NULL")]
-		public int person_id
-		{
-			get
-			{
-				return this._person_id;
-			}
-			set
-			{
-				if ((this._person_id != value))
-				{
-					if (this._PERSON.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onperson_idChanging(value);
-					this.SendPropertyChanging();
-					this._person_id = value;
-					this.SendPropertyChanged("person_id");
-					this.Onperson_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PERSON_CAR", Storage="_PERSON", ThisKey="person_id", OtherKey="id", IsForeignKey=true)]
-		public PERSON PERSON
-		{
-			get
-			{
-				return this._PERSON.Entity;
-			}
-			set
-			{
-				PERSON previousValue = this._PERSON.Entity;
-				if (((previousValue != value) 
-							|| (this._PERSON.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PERSON.Entity = null;
-						previousValue.CARs.Remove(this);
-					}
-					this._PERSON.Entity = value;
-					if ((value != null))
-					{
-						value.CARs.Add(this);
-						this._person_id = value.id;
-					}
-					else
-					{
-						this._person_id = default(int);
-					}
-					this.SendPropertyChanged("PERSON");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<CAR>();
 			}
 		}
 	}
@@ -395,6 +220,181 @@ namespace sql_database_example
 		{
 			this.SendPropertyChanging();
 			entity.PERSON = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CAR")]
+	public partial class CAR : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _mark;
+		
+		private decimal _price;
+		
+		private System.Nullable<int> _person_id;
+		
+		private EntityRef<PERSON> _PERSON;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnmarkChanging(string value);
+    partial void OnmarkChanged();
+    partial void OnpriceChanging(decimal value);
+    partial void OnpriceChanged();
+    partial void Onperson_idChanging(System.Nullable<int> value);
+    partial void Onperson_idChanged();
+    #endregion
+		
+		public CAR()
+		{
+			this._PERSON = default(EntityRef<PERSON>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mark", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string mark
+		{
+			get
+			{
+				return this._mark;
+			}
+			set
+			{
+				if ((this._mark != value))
+				{
+					this.OnmarkChanging(value);
+					this.SendPropertyChanging();
+					this._mark = value;
+					this.SendPropertyChanged("mark");
+					this.OnmarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_price", DbType="Decimal(18,2) NOT NULL")]
+		public decimal price
+		{
+			get
+			{
+				return this._price;
+			}
+			set
+			{
+				if ((this._price != value))
+				{
+					this.OnpriceChanging(value);
+					this.SendPropertyChanging();
+					this._price = value;
+					this.SendPropertyChanged("price");
+					this.OnpriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_person_id", DbType="Int")]
+		public System.Nullable<int> person_id
+		{
+			get
+			{
+				return this._person_id;
+			}
+			set
+			{
+				if ((this._person_id != value))
+				{
+					if (this._PERSON.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onperson_idChanging(value);
+					this.SendPropertyChanging();
+					this._person_id = value;
+					this.SendPropertyChanged("person_id");
+					this.Onperson_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PERSON_CAR", Storage="_PERSON", ThisKey="person_id", OtherKey="id", IsForeignKey=true)]
+		public PERSON PERSON
+		{
+			get
+			{
+				return this._PERSON.Entity;
+			}
+			set
+			{
+				PERSON previousValue = this._PERSON.Entity;
+				if (((previousValue != value) 
+							|| (this._PERSON.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PERSON.Entity = null;
+						previousValue.CARs.Remove(this);
+					}
+					this._PERSON.Entity = value;
+					if ((value != null))
+					{
+						value.CARs.Add(this);
+						this._person_id = value.id;
+					}
+					else
+					{
+						this._person_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("PERSON");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
