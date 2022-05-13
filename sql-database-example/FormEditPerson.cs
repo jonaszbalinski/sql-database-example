@@ -29,9 +29,8 @@ namespace sql_database_example
         {
             if(editPerson != null)
             {
-                MainForm.DatabaseDT.PERSONs.ElementAt(editPerson.id).name = textBox1.Text;
-                MainForm.DatabaseDT.PERSONs.ElementAt(editPerson.id)
-                    .driver_license_date = dateTimePicker1.Value;
+                editPerson.name = textBox1.Text;
+                editPerson.driver_license_date = dateTimePicker1.Value;
             }
             else
             {
