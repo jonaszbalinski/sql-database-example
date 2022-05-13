@@ -38,16 +38,16 @@
             // 
             this.listBoxPerson.FormattingEnabled = true;
             this.listBoxPerson.ItemHeight = 16;
-            this.listBoxPerson.Location = new System.Drawing.Point(24, 24);
+            this.listBoxPerson.Location = new System.Drawing.Point(12, 8);
             this.listBoxPerson.Name = "listBoxPerson";
-            this.listBoxPerson.Size = new System.Drawing.Size(547, 388);
+            this.listBoxPerson.Size = new System.Drawing.Size(558, 468);
             this.listBoxPerson.TabIndex = 0;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(86, 450);
+            this.buttonAdd.Location = new System.Drawing.Point(12, 497);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(110, 44);
+            this.buttonAdd.Size = new System.Drawing.Size(147, 44);
             this.buttonAdd.TabIndex = 1;
             this.buttonAdd.Text = "Add";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -55,9 +55,9 @@
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(248, 450);
+            this.buttonDelete.Location = new System.Drawing.Point(222, 497);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(111, 44);
+            this.buttonDelete.Size = new System.Drawing.Size(151, 44);
             this.buttonDelete.TabIndex = 2;
             this.buttonDelete.Text = "Delete";
             this.buttonDelete.UseVisualStyleBackColor = true;
@@ -65,9 +65,9 @@
             // 
             // buttonEdit
             // 
-            this.buttonEdit.Location = new System.Drawing.Point(444, 450);
+            this.buttonEdit.Location = new System.Drawing.Point(429, 497);
             this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(101, 44);
+            this.buttonEdit.Size = new System.Drawing.Size(141, 44);
             this.buttonEdit.TabIndex = 3;
             this.buttonEdit.Text = "Edit";
             this.buttonEdit.UseVisualStyleBackColor = true;
@@ -77,7 +77,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 531);
+            this.ClientSize = new System.Drawing.Size(582, 553);
             this.Controls.Add(this.buttonEdit);
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonAdd);

@@ -32,35 +32,11 @@ namespace sql_database_example
             {
                 if (listBoxPerson.SelectedItem is PERSON p)
                 {
-                    if (p.CARs.Count == 0)
-                    {
-                        if(MessageBox.Show("Do you want to delete selected person?",
-                            "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            DatabaseDT.PERSONs.DeleteOnSubmit(p);
-                            DatabaseDT.SubmitChanges();
-                            RefreshPersonList();
-                        }
-                        return;
-                    }
 
-                    DialogResult result = MessageBox
-                        .Show("Do you want to delete selected person with cars?",
-                        "Warning", MessageBoxButtons.YesNoCancel);
-
-                    if (result == DialogResult.Yes)
+                    if(MessageBox.Show("Do you want to delete selected person?",
+                       "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         DatabaseDT.CARs.DeleteAllOnSubmit(p.CARs);
-                        DatabaseDT.PERSONs.DeleteOnSubmit(p);
-                        DatabaseDT.SubmitChanges();
-                        RefreshPersonList();
-                    }
-                    else if (result == DialogResult.No)
-                    {
-                        foreach (CAR car in p.CARs)
-                        {
-                            car.person_id = null;
-                        }
                         DatabaseDT.PERSONs.DeleteOnSubmit(p);
                         DatabaseDT.SubmitChanges();
                         RefreshPersonList();
@@ -72,10 +48,15 @@ namespace sql_database_example
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             FormEditPerson form = new FormEditPerson();
-            if (form.ShowDialog() == DialogResult.OK)
+            if (form.ShowDialog() != DialogResult.OK)
             {
+                PERSON toDelete = form.editPerson;
+                DatabaseDT.CARs.DeleteAllOnSubmit(toDelete.CARs);
+                DatabaseDT.PERSONs.DeleteOnSubmit(toDelete);
+                DatabaseDT.SubmitChanges();
                 RefreshPersonList();
             }
+            RefreshPersonList();
         }
 
         private void buttonEdit_Click(object sender, EventArgs e)
@@ -85,10 +66,11 @@ namespace sql_database_example
                 if (listBoxPerson.SelectedItem is PERSON p)
                 {
                     FormEditPerson form = new FormEditPerson(p);
-                    if (form.ShowDialog() == DialogResult.OK)
+                    if (form.ShowDialog() != DialogResult.OK)
                     {
-                        RefreshPersonList();
+                        //pass
                     }
+                    RefreshPersonList();
                 }
             }
 
@@ -109,10 +91,7 @@ namespace sql_database_example
     {
         public override string ToString()
         {
-            string toReturn = mark + " (" + price + "$)";
-            if (person_id != null) toReturn += " owned by: " + person_id.ToString();
-
-            return toReturn;
+            return mark + " (" + price + "$)";
         }
     }
 }
